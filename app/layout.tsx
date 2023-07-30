@@ -2,12 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Roboto_Mono, Titillium_Web } from "next/font/google";
 
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
-
 const roboto_mono = Roboto_Mono({
   subsets: ["latin"],
   display: "swap",
@@ -33,9 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.style} ${roboto_mono.variable} ${titillium_web.variable}`}
-      >
+      <body className={` ${roboto_mono.variable} ${titillium_web.variable}`}>
         {children}
       </body>
     </html>

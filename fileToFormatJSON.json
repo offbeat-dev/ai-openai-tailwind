@@ -1,0 +1,38 @@
+[
+  {
+    "components": [
+      {
+        "tagName": "h1",
+        "components": [
+          { "type": "textnode", "content": "Before they sold out" },
+          { "type": "textnode", "content": "readymade gluten" }
+        ]
+      },
+      {
+        "tagName": "p",
+        "components": [
+          {
+            "type": "textnode",
+            "content": "Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray."
+          }
+        ]
+      },
+      {
+        "tagName": "button",
+        "components": [{ "type": "textnode", "content": "Button" }]
+      },
+      {
+        "tagName": "button",
+        "components": [{ "type": "textnode", "content": "Button" }]
+      },
+      {
+        "type": "image",
+        "attributes": {
+          "alt": "hero",
+          "src": "https://dummyimage.com/720x600"
+        }
+      }
+    ]
+  },
+  {}
+]
