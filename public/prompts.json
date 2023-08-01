@@ -1,0 +1,10 @@
+[
+  {
+    "section": "header",
+    "prompt": "we are going to generate a landing page for a single page website about the topic \"pet store we take care of your pets\". I'll provide examples and instructions for each one of the sections I want to generate. I need you to act as if you were a developer and adjust the content of the JSON structures I provide so I can use them to generate the landing page. please return only JSON code. no explanations. components of type 'short-text' can have a max of 50 characters. components of type 'medium-text' can have a max of 150 characters. let's start with the header. here is the example json structure: \"components\":[{\"id\":\"short-text-1\",\"type\":\"textnode\",\"content\":\"FirstLink\"},{\"id\":\"short-text-2\",\"type\":\"textnode\",\"content\":\"SecondLink\"},{\"id\":\"short-text-3\",\"type\":\"textnode\",\"content\":\"ThirdLink\"},{\"id\":\"short-text-4\",\"type\":\"textnode\",\"content\":\"FourthLink\"},{\"id\":\"short-text-5\",\"type\":\"textnode\",\"content\":\"Tailblocks\"},{\"id\":\"short-text-6\",\"type\":\"textnode\",\"content\":\"Button\"}]"
+  },
+  {
+    "section": "hero",
+    "prompt": "adjust the text-node content in the following so I can use the following JSON structure to generate a top selling landing page for the topic 'pet store we take care of your pets'. for images adjust the alt attribute and for the src attribute use an url with the format https://source.unsplash.com/random/700x700/?[topic]. please return only JSON code. no explanations. here is the example json structure:  components:[{id:\"short-text-1\",type:\"textnode\",content:\"BuildyourSassinminutes\",},{id:\"medium-text-2\",type:\"textnode\",content:\"TheOne-ManSaaSFramework.\",},{id:\"short-text-4\",type:\"textnode\",content:\"TheOne-ManSaaSFramework.\",},{id:\"short-text-5\",type:\"textnode\",content:\"TheOne-ManSaaSFramework.\",},{id:\"image-1\",type:\"image\",attributes:{alt:\"BUILD→MARKET→MANAGEYOURSAAS-TheOne-ManSaaSFramework\",src:\"https://source.unsplash.com/random/700x700/?saas\",}]"
+  }
+]

@@ -1,21 +1,24 @@
 "use client";
 
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, use } from "react";
 import "grapesjs/dist/css/grapes.min.css";
 
 import GrapesJSEditor from "./components/GrapesJSEditor";
 import { pageComponents } from "./components/pageComponents";
 
 export default function IndexPage() {
+  const [value, setValue] = React.useState<string>("");
   const [prompt, setPrompt] = React.useState<string>("");
   const [completion, setCompletion] = React.useState<string>("");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [grapesJSComponents, setGrapesJSComponents] = React.useState<any>([]);
-  React.useEffect(() => {
-    if (completion) {
-      setIsLoading(false);
-    }
-  }, [completion]);
+
+  const handleInput = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(e.target.value);
+    },
+    []
+  );
 
   const handleFormSubmit = async (formData: FormData) => {
     setIsLoading(true);
@@ -39,21 +42,91 @@ export default function IndexPage() {
     setCompletion(data.result);
   };
 
-  //   // <div>
-  //   //
-  //   //   <div>Please type your prompt</div>
-  //   //   <input
-  //   //     className="text-black"
-  //   //     value={value}
-  //   //     onChange={handleInput}
-  //   //     onKeyDown={handleKeyDown}
-  //   //   />
-  //   //   <div>Prompt: {prompt}</div>
-  //   //   <div>
-  //   //     Completion: <>{parse(completion)}</>
-  //   //   </div>
-  //   // </div>
-  // );
+  const handleKeyDown = React.useCallback(
+    async (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === "Enter") {
+        setPrompt(value);
+        setCompletion("Loading...");
+        const response = await fetch("/api/hello", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ text: value }),
+        });
+        const data = await response.json();
+        setValue("");
+        setCompletion(data.result);
+      }
+    },
+    [value]
+  );
+
+  const replaceContent = (obj: any, components: any) => {
+    if (obj.type === "textnode") {
+      const result = components.find((c1: any) => c1.id === obj.id);
+
+      if (result) {
+        obj.content = result.content;
+        return result;
+      }
+    } else if (obj.type === "image") {
+      components.find((c1: any) => {
+        if (c1.id === obj.id) {
+          obj.attributes.src = c1.attributes.src;
+        }
+      });
+    } else {
+      if (obj.components) {
+        obj.components = obj.components.map((c: any) => {
+          return replaceContent(c, components);
+        });
+      }
+    }
+    // }
+    return obj;
+  };
+
+  useEffect(() => {
+    console.log(completion);
+    if (completion) {
+      setIsLoading(false);
+    }
+
+    const newPageComponents: any = [];
+    if (Array.isArray(completion)) {
+      completion.forEach((obj: any, index: number) => {
+        const newComponents = pageComponents[index].components.map(
+          (component: any) => {
+            return replaceContent(component, obj.components);
+          }
+        );
+        newPageComponents.push({
+          ...pageComponents[index],
+          components: newComponents,
+        });
+      });
+    }
+    console.log(pageComponents, newPageComponents);
+
+    setGrapesJSComponents(newPageComponents);
+  }, [completion]);
+
+  return (
+    <>
+      <div>
+        <div>Please type your prompt</div>
+        <input
+          className="text-black"
+          value={value}
+          onChange={handleInput}
+          onKeyDown={handleKeyDown}
+        />
+        <div>Prompt: {prompt}</div>
+      </div>
+      <GrapesJSEditor components={grapesJSComponents} />
+    </>
+  );
 
   //recursively look into pageComponents.hero.components object and replace the content node with its correspoinding node in obj.components
   useEffect(() => {
@@ -110,40 +183,12 @@ export default function IndexPage() {
         },
       ],
     };
-    const replaceContent = (obj: any, components: any) => {
-      if (obj.type === "textnode") {
-        components.find((c1: any) => {
-          if (c1.components) {
-            const result = c1.components.find((c2: any) => c2.id === obj.id);
-            if (result) {
-              obj.content = result.content;
-              return result;
-            }
-          }
-        });
-      } else if (obj.type === "image") {
-        components.find((c1: any) => {
-          console.log("c1", c1);
-          if (c1.id === obj.id) {
-            obj.attributes.src = c1.attributes.src;
-          }
-        });
-      } else {
-        if (obj.components) {
-          obj.components = obj.components.map((c: any) => {
-            return replaceContent(c, components);
-          });
-        }
-      }
-      // }
-      return obj;
-    };
-
     const newComponents = pageComponents.hero.components.map(
       (component: any) => {
         return replaceContent(component, obj.components);
       }
     );
+    console.log(pageComponents.hero.components);
 
     setGrapesJSComponents(newComponents);
 
