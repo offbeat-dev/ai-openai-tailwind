@@ -28,9 +28,9 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    formData.append("prompt", e.currentTarget.prompt.value);
+    // formData.append("prompt", e.currentTarget.prompt.value);
     acceptedFiles.forEach((file: FileWithPath) => {
-      formData.append("pdfFile", file, file.name);
+      formData.append("pdf", file, file.name);
     });
     handleFormSubmit(formData);
 
@@ -39,7 +39,7 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
 
   return (
     <>
-      <div className="fixed z-10 bg-black inset-0 h-screen">
+      <div className="fixed z-10 bg-black inset-0">
         <Image
           src="verndale.svg"
           alt="logo"
@@ -53,12 +53,12 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
             Generate your landing page
           </h1> */}
             <form onSubmit={handleSubmit} className="w-full block">
-              <textarea
+              {/* <textarea
                 placeholder="Describe the product or service you are generating a landing page for..."
                 name="prompt"
                 className="w-full rounded-md text-2xl text-black p-4 font-titillium"
                 rows={5}
-              />
+              /> */}
               <div>
                 <div
                   {...getRootProps({ className: "dropzone" })}

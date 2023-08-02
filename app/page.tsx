@@ -2,198 +2,112 @@
 
 import React, { useEffect, useCallback, use } from "react";
 import "grapesjs/dist/css/grapes.min.css";
-
 import GrapesJSEditor from "./components/GrapesJSEditor";
 import { pageComponents } from "./components/pageComponents";
+import PromptForm from "./components/PromptForm";
+import { response } from "./components/testResponse";
+import { replaceContent } from "./helpers";
+
+type pdfDataTypes = {
+  companyInfo: {
+    companyLogo: {
+      url: string;
+    };
+  };
+  landingPage: {
+    hero: {
+      title: string;
+      shortDescription: string;
+      imageUrl: string;
+      imageAltText: string;
+      buttonText: string;
+      buttonUrl: string;
+    };
+  };
+};
 
 export default function IndexPage() {
-  const [value, setValue] = React.useState<string>("");
-  const [prompt, setPrompt] = React.useState<string>("");
-  const [completion, setCompletion] = React.useState<string>("");
+  const [data, setData] = React.useState<pdfDataTypes | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [grapesJSComponents, setGrapesJSComponents] = React.useState<any>([]);
 
-  const handleInput = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(e.target.value);
-    },
-    []
-  );
-
   const handleFormSubmit = async (formData: FormData) => {
     setIsLoading(true);
-    if (formData.has("prompt")) {
-      setPrompt(formData.get("prompt") as string);
-    }
-    if (formData.has("pdfFile")) {
-      //send form to CMS API
-      console.log(formData.get("pdfFile"));
-    }
-    const response = await fetch("/api/hello", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text: prompt }),
-    });
-    const data = await response.json();
-    setIsLoading(false);
-    setPrompt("");
-    setCompletion(data.result);
-  };
-
-  const handleKeyDown = React.useCallback(
-    async (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") {
-        setPrompt(value);
-        setCompletion("Loading...");
-        const response = await fetch("/api/hello", {
+    try {
+      const response = await fetch(
+        "https://vodkabyte.azurewebsites.net/ParsePdf",
+        {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            Accept: "*/*",
+            ContentType: "multipart/form-data",
+            AcceptEncoding: "gzip, deflate, br",
+            Connection: "keep-alive",
           },
-          body: JSON.stringify({ text: value }),
-        });
-        const data = await response.json();
-        setValue("");
-        setCompletion(data.result);
-      }
-    },
-    [value]
-  );
-
-  const replaceContent = (obj: any, components: any) => {
-    if (obj.type === "textnode") {
-      const result = components.find((c1: any) => c1.id === obj.id);
-
-      if (result) {
-        obj.content = result.content;
-        return result;
-      }
-    } else if (obj.type === "image") {
-      components.find((c1: any) => {
-        if (c1.id === obj.id) {
-          obj.attributes.src = c1.attributes.src;
+          body: formData,
         }
-      });
-    } else {
-      if (obj.components) {
-        obj.components = obj.components.map((c: any) => {
-          return replaceContent(c, components);
-        });
-      }
+      );
+      const data = await response.json();
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
     }
-    // }
-    return obj;
+
+    // setCompletion(data.result);
+
+    // setCompletion(response.landingPage.hero);
   };
 
   useEffect(() => {
-    console.log(completion);
-    if (completion) {
+    if (!data) return;
+    if (data) {
       setIsLoading(false);
     }
-
-    const newPageComponents: any = [];
-    if (Array.isArray(completion)) {
-      completion.forEach((obj: any, index: number) => {
-        const newComponents = pageComponents[index].components.map(
-          (component: any) => {
-            return replaceContent(component, obj.components);
-          }
-        );
-        newPageComponents.push({
-          ...pageComponents[index],
-          components: newComponents,
-        });
-      });
-    }
-    console.log(pageComponents, newPageComponents);
-
-    setGrapesJSComponents(newPageComponents);
-  }, [completion]);
-
-  return (
-    <>
-      <div>
-        <div>Please type your prompt</div>
-        <input
-          className="text-black"
-          value={value}
-          onChange={handleInput}
-          onKeyDown={handleKeyDown}
-        />
-        <div>Prompt: {prompt}</div>
-      </div>
-      <GrapesJSEditor components={grapesJSComponents} />
-    </>
-  );
-
-  //recursively look into pageComponents.hero.components object and replace the content node with its correspoinding node in obj.components
-  useEffect(() => {
-    const obj = {
+    const hero = data.landingPage.hero;
+    const newHero = {
       components: [
+        { field: "title", content: hero.title, type: "textnode" },
         {
-          tagName: "h1",
-          components: [
-            {
-              id: "gjs-text-1",
-              type: "textnode",
-              content: "Pet Store - We Take Care of Your Pets",
-            },
-          ],
+          field: "shortDescription",
+          content: hero.shortDescription,
+          type: "textnode",
         },
         {
-          tagName: "p",
-          components: [
-            {
-              id: "gjs-text-3",
-              type: "textnode",
-              content:
-                "Welcome to our pet store where we prioritize the well-being of your beloved pets.",
-            },
-          ],
-        },
-        {
-          tagName: "button",
-          components: [
-            {
-              id: "gjs-text-4",
-              type: "textnode",
-              content: "Shop Now",
-            },
-          ],
-        },
-        {
-          tagName: "button",
-          components: [
-            {
-              id: "gjs-text-5",
-              type: "textnode",
-              content: "Learn More",
-            },
-          ],
-        },
-        {
-          id: "gjs-img-1",
+          field: "image",
+          attributes: { alt: hero.imageAltText, src: hero.imageUrl },
           type: "image",
-          attributes: {
-            alt: "Pet Store - We Take Care of Your Pets",
-            src: "https://source.unsplash.com/random/700x700/?pet-store",
-          },
+        },
+        { field: "buttonText", content: hero.buttonText, type: "textnode" },
+        {
+          field: "buttonUrl",
+          attributes: { href: hero.buttonUrl },
+          type: "link",
         },
       ],
     };
-    const newComponents = pageComponents.hero.components.map(
-      (component: any) => {
-        return replaceContent(component, obj.components);
-      }
-    );
-    console.log(pageComponents.hero.components);
+
+    const newComponents = pageComponents[0].components.map((component: any) => {
+      return replaceContent(component, newHero.components);
+    });
 
     setGrapesJSComponents(newComponents);
+  }, [data]);
 
-    console.log(newComponents);
-  }, []);
+  // return (
+  //   <>
+  //     <div>
+  //       <div>Please type your prompt</div>
+  //       <input
+  //         className="text-black"
+  //         value={value}
+  //         onChange={handleInput}
+  //         onKeyDown={handleKeyDown}
+  //       />
+  //       <div>Prompt: {prompt}</div>
+  //     </div>
+  //   </>
+  // );
 
   if (isLoading) {
     return (
@@ -204,9 +118,9 @@ export default function IndexPage() {
   } else {
     return (
       <>
-        {/* {!isLoading && completion === "" && (
+        {!isLoading && !data && (
           <PromptForm handleFormSubmit={handleFormSubmit} />
-        )} */}
+        )}
 
         <GrapesJSEditor components={grapesJSComponents} />
       </>

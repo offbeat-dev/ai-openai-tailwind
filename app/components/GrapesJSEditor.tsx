@@ -57,6 +57,9 @@ const GrapesJSEditor = ({ components }: { components: [] }) => {
           '<a href="https://verndale.com"><img class="gjs-logo" src="verndale.svg"></a>';
         document.querySelector(".gjs-pn-commands")?.append(div);
       });
+      e.on("component:add", (c) => {
+        console.log(JSON.parse(JSON.stringify(e.getComponents())));
+      });
       e.render();
       setEditor(e);
     } else if (editor) {
