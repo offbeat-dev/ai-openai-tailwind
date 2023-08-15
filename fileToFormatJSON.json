@@ -1,3 +1,23 @@
-{
-  components:[{id:"short-text-1",type:"textnode",content:"Build your Sass in minutes",},{id:"paragraph-text-2",type:"textnode",content:"Introducing our revolutionary solution that lets you create stunning and dynamic web styles with unprecedented ease and speed. Say goodbye to hours of manual coding and embrace the future of web design with our cutting-edge Sass builder.",},{id:"short-text-3",type:"textnode",content:"Button",},{id:"short-text-4",type:"textnode",content:"Button",},{id:"image-1",type:"image",attributes:{alt:"BUILD→MARKET→MANAGEYOURSAAS-TheOne-ManSaaSFramework",src:"https://source.unsplash.com/random/700x700/?saas",}]
-  }
+[
+  {
+    "type": "link",
+    "droppable": true,
+    "editable": false,
+    "attributes": { "id": "iayg" },
+    "components": [
+      {
+        "type": "image",
+        "resizable": { "ratioDefault": 1 },
+        "classes": [
+          "lg:h-12",
+          "md:h-36",
+          "w-full",
+          "object-cover",
+          "object-center"
+        ],
+        "attributes": { "src": "https://dummyimage.com/720x400", "alt": "blog" }
+      }
+    ]
+  },
+  { "tagName": "section", "classes": ["text-gray-600", "body-font"] }
+]

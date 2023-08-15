@@ -10,9 +10,15 @@ import { replaceContent } from "./helpers";
 
 type pdfDataTypes = {
   companyInfo: {
+    companyUrl: string;
     companyLogo: {
-      url: string;
+      file: {
+        url: string;
+      };
+      title: string;
     };
+    shortCompanyName: string;
+    copyright: string;
   };
   landingPage: {
     hero: {
@@ -27,7 +33,7 @@ type pdfDataTypes = {
 };
 
 export default function IndexPage() {
-  const [data, setData] = React.useState<pdfDataTypes | null>(null);
+  const [data, setData] = React.useState<pdfDataTypes | null>(response as any);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [grapesJSComponents, setGrapesJSComponents] = React.useState<any>([]);
 
@@ -53,10 +59,6 @@ export default function IndexPage() {
     } catch (error) {
       console.log(error);
     }
-
-    // setCompletion(data.result);
-
-    // setCompletion(response.landingPage.hero);
   };
 
   useEffect(() => {
@@ -65,6 +67,25 @@ export default function IndexPage() {
       setIsLoading(false);
     }
     const hero = data.landingPage.hero;
+    const companyInfo = data.companyInfo;
+    const newHeader = {
+      components: [
+        // {
+        //   field: "companyLink",
+        //   type: "link",
+        //   content: companyInfo.companyUrl,
+        // },
+        {
+          field: "companyLogo",
+          type: "image",
+          attributes: {
+            src: `https:${companyInfo.companyLogo.file.url}`,
+            alt: companyInfo.companyLogo.title,
+          },
+        },
+        ,
+      ],
+    };
     const newHero = {
       components: [
         { field: "title", content: hero.title, type: "textnode" },
@@ -86,28 +107,44 @@ export default function IndexPage() {
         },
       ],
     };
+    const newFooter = {
+      components: [
+        {
+          field: "shortCompanyName",
+          type: "textnode",
+          content: companyInfo.shortCompanyName,
+        },
+        {
+          field: "copyright",
+          type: "textnode",
+          content: companyInfo.copyright,
+        },
+      ],
+    };
 
-    const newComponents = pageComponents[0].components.map((component: any) => {
-      return replaceContent(component, newHero.components);
-    });
+    const newHeaderComponents = pageComponents[0].components.map(
+      (component: any) => {
+        return replaceContent(component, newHeader.components);
+      }
+    );
+    const newHeroComponents = pageComponents[1].components.map(
+      (component: any) => {
+        return replaceContent(component, newHero.components);
+      }
+    );
 
-    setGrapesJSComponents(newComponents);
+    const newFooterComponents = pageComponents[2].components.map(
+      (component: any) => {
+        return replaceContent(component, newFooter.components);
+      }
+    );
+
+    pageComponents[0].components = newHeaderComponents;
+    pageComponents[1].components = newHeroComponents;
+    pageComponents[2].components = newFooterComponents;
+
+    setGrapesJSComponents(pageComponents);
   }, [data]);
-
-  // return (
-  //   <>
-  //     <div>
-  //       <div>Please type your prompt</div>
-  //       <input
-  //         className="text-black"
-  //         value={value}
-  //         onChange={handleInput}
-  //         onKeyDown={handleKeyDown}
-  //       />
-  //       <div>Prompt: {prompt}</div>
-  //     </div>
-  //   </>
-  // );
 
   if (isLoading) {
     return (
