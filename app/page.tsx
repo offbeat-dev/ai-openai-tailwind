@@ -168,7 +168,7 @@ export default function IndexPage() {
         field: `featuresImage${index + 1}`,
         type: "image",
         attributes: { src: `${callout.iconUrl}-variation` },
-      });
+      } as any);
       newFeaturedSection.components.push({
         field: `featuresTitle${index + 1}`,
         type: "textnode",
