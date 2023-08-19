@@ -18,6 +18,7 @@
     "grapesjs": "^0.21.3",
     "grapesjs-preset-webpage": "^1.0.3",
     "grapesjs-tailwind": "^1.0.10",
+    "gsap": "^3.12.2",
     "html-react-parser": "^4.2.0",
     "next": "13.4.12",
     "openai": "^3.3.0",

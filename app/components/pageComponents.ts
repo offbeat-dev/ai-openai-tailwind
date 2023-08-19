@@ -135,8 +135,8 @@ export const pageComponents = [
                 classes: ["flex", "justify-center"],
                 components: [
                   {
-                    tagName: "button",
-                    type: "text",
+                    field: "buttonUrl",
+                    type: "link",
                     classes: [
                       "inline-flex",
                       "text-white",
@@ -149,11 +149,372 @@ export const pageComponents = [
                       "rounded",
                       "text-lg",
                     ],
+                    attributes: {
+                      href: "https://google.com",
+                      target: "_blank",
+                      id: "heroCTA",
+                    },
                     components: [
                       {
                         field: "buttonText",
                         type: "textnode",
                         content: "Button",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    tagName: "section",
+    classes: ["text-gray-600", "body-font"],
+    components: [
+      {
+        classes: ["container", "px-5", "py-24", "mx-auto"],
+        components: [
+          {
+            classes: ["text-center", "mb-20"],
+            components: [
+              {
+                tagName: "h1",
+                type: "text",
+                classes: [
+                  "sm:text-3xl",
+                  "text-2xl",
+                  "font-medium",
+                  "title-font",
+                  "text-gray-900",
+                  "mb-4",
+                ],
+                components: [
+                  {
+                    field: "featuresTitle",
+                    type: "textnode",
+                    content: "Raw Denim Heirloom Man Braid",
+                  },
+                ],
+              },
+              {
+                classes: ["flex", "mt-6", "justify-center"],
+                components: [
+                  {
+                    classes: [
+                      "w-16",
+                      "h-1",
+                      "rounded-full",
+                      "bg-indigo-500",
+                      "inline-flex",
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            classes: [
+              "flex",
+              "flex-wrap",
+              "sm:-m-4",
+              "-mx-4",
+              "-mb-10",
+              "-mt-4",
+              "md:space-y-0",
+              "space-y-6",
+            ],
+            components: [
+              {
+                classes: [
+                  "p-4",
+                  "md:w-1/3",
+                  "flex",
+                  "flex-col",
+                  "text-center",
+                  "items-center",
+                ],
+                components: [
+                  {
+                    classes: [
+                      "w-20",
+                      "h-20",
+                      "inline-flex",
+                      "items-center",
+                      "justify-center",
+                      "rounded-full",
+                      "text-indigo-500",
+                      "mb-5",
+                      "flex-shrink-0",
+                    ],
+                    components: [
+                      {
+                        field: "featuresImage1",
+                        type: "image",
+                        classes: [
+                          "w-20",
+                          "h-20",
+                          "rounded-full",
+                          "object-cover",
+                        ],
+                        attributes: {
+                          src: "https://images.ctfassets.net/da02ousowwa0/LLNbscdDrdqUQX277UF5p/3282752c81bc15111cdd50a1c0e6bdc4/ToyotaLogoRedVer.svg",
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    classes: ["flex-grow"],
+                    components: [
+                      {
+                        tagName: "h2",
+                        type: "text",
+                        classes: [
+                          "text-gray-900",
+                          "text-lg",
+                          "title-font",
+                          "font-medium",
+                          "mb-3",
+                        ],
+                        components: [
+                          {
+                            field: "featuresTitle1",
+                            type: "textnode",
+                            content: "Shooting Stars",
+                          },
+                        ],
+                      },
+                      {
+                        tagName: "p",
+                        type: "text",
+                        classes: ["leading-relaxed", "text-base"],
+                        components: [
+                          {
+                            field: "featuresDescription1",
+                            type: "textnode",
+                            content:
+                              "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.",
+                          },
+                        ],
+                      },
+                      {
+                        type: "link",
+                        field: "featuresLinkUrl1",
+                        classes: [
+                          "mt-3",
+                          "text-indigo-500",
+                          "inline-flex",
+                          "items-center",
+                        ],
+                        attributes: {
+                          href: "https://google.com",
+                          target: "_blank",
+                        },
+                        components: [
+                          {
+                            field: "featuresLinkText1",
+                            type: "textnode",
+                            content: "Learn More",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                classes: [
+                  "p-4",
+                  "md:w-1/3",
+                  "flex",
+                  "flex-col",
+                  "text-center",
+                  "items-center",
+                ],
+                components: [
+                  {
+                    classes: [
+                      "w-20",
+                      "h-20",
+                      "inline-flex",
+                      "items-center",
+                      "justify-center",
+                      "rounded-full",
+                      "text-indigo-500",
+                      "mb-5",
+                      "flex-shrink-0",
+                    ],
+                    components: [
+                      {
+                        field: "featuresImage2",
+                        type: "image",
+                        resizable: { ratioDefault: 1 },
+                        classes: [
+                          "w-20",
+                          "h-20",
+                          "rounded-full",
+                          "object-cover",
+                        ],
+                        attributes: {
+                          src: "https://images.ctfassets.net/da02ousowwa0/LLNbscdDrdqUQX277UF5p/3282752c81bc15111cdd50a1c0e6bdc4/ToyotaLogoRedVer.svg",
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    classes: ["flex-grow"],
+                    components: [
+                      {
+                        tagName: "h2",
+                        type: "text",
+                        classes: [
+                          "text-gray-900",
+                          "text-lg",
+                          "title-font",
+                          "font-medium",
+                          "mb-3",
+                        ],
+                        components: [
+                          {
+                            field: "featuresTitle2",
+                            type: "textnode",
+                            content: "Shooting Stars",
+                          },
+                        ],
+                      },
+                      {
+                        tagName: "p",
+                        type: "text",
+                        classes: ["leading-relaxed", "text-base"],
+                        components: [
+                          {
+                            field: "featuresDescription2",
+                            type: "textnode",
+                            content:
+                              "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.",
+                          },
+                        ],
+                      },
+                      {
+                        type: "link",
+                        field: "featuresLinkUrl1",
+                        classes: [
+                          "mt-3",
+                          "text-indigo-500",
+                          "inline-flex",
+                          "items-center",
+                        ],
+                        attributes: {
+                          href: "https://google.com",
+                          target: "_blank",
+                        },
+                        components: [
+                          {
+                            field: "featuresLinkText2",
+                            type: "textnode",
+                            content: "Learn More",
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                classes: [
+                  "p-4",
+                  "md:w-1/3",
+                  "flex",
+                  "flex-col",
+                  "text-center",
+                  "items-center",
+                ],
+                components: [
+                  {
+                    classes: [
+                      "w-20",
+                      "h-20",
+                      "inline-flex",
+                      "items-center",
+                      "justify-center",
+                      "rounded-full",
+                      "text-indigo-500",
+                      "mb-5",
+                      "flex-shrink-0",
+                    ],
+                    components: [
+                      {
+                        field: "featuresImage3",
+                        type: "image",
+                        resizable: { ratioDefault: 1 },
+                        classes: [
+                          "w-20",
+                          "h-20",
+                          "rounded-full",
+                          "object-cover",
+                        ],
+                        attributes: {
+                          src: "https://images.ctfassets.net/da02ousowwa0/LLNbscdDrdqUQX277UF5p/3282752c81bc15111cdd50a1c0e6bdc4/ToyotaLogoRedVer.svg",
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    classes: ["flex-grow"],
+                    components: [
+                      {
+                        tagName: "h2",
+                        type: "text",
+                        classes: [
+                          "text-gray-900",
+                          "text-lg",
+                          "title-font",
+                          "font-medium",
+                          "mb-3",
+                        ],
+                        components: [
+                          {
+                            field: "featuresTitle3",
+                            type: "textnode",
+                            content: "Shooting Stars",
+                          },
+                        ],
+                      },
+                      {
+                        tagName: "p",
+                        type: "text",
+                        classes: ["leading-relaxed", "text-base"],
+                        components: [
+                          {
+                            field: "featuresDescription3",
+                            type: "textnode",
+                            content:
+                              "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.",
+                          },
+                        ],
+                      },
+                      {
+                        type: "link",
+                        field: "featuresLinkUrl1",
+                        classes: [
+                          "mt-3",
+                          "text-indigo-500",
+                          "inline-flex",
+                          "items-center",
+                        ],
+                        attributes: {
+                          href: "https://google.com",
+                          target: "_blank",
+                        },
+                        components: [
+                          {
+                            field: "featuresLinkText3",
+                            type: "textnode",
+                            content: "Learn More",
+                          },
+                        ],
                       },
                     ],
                   },
@@ -392,3 +753,389 @@ export const pageComponents = [
     ],
   },
 ];
+
+// [
+//   {
+//     tagName: "section",
+//     classes: ["text-gray-600", "body-font"],
+//     components: [
+//       {
+//         classes: ["container", "px-5", "py-24", "mx-auto"],
+//         components: [
+//           {
+//             classes: ["text-center", "mb-20"],
+//             components: [
+//               {
+//                 tagName: "h1",
+//                 type: "text",
+//                 classes: [
+//                   "sm:text-3xl",
+//                   "text-2xl",
+//                   "font-medium",
+//                   "title-font",
+//                   "text-gray-900",
+//                   "mb-4",
+//                 ],
+//                 components: [
+//                   {
+//                     type: "textnode",
+//                     content: "Raw Denim Heirloom Man Braid",
+//                   },
+//                 ],
+//               },
+//               {
+//                 classes: ["flex", "mt-6", "justify-center"],
+//                 components: [
+//                   {
+//                     classes: [
+//                       "w-16",
+//                       "h-1",
+//                       "rounded-full",
+//                       "bg-indigo-500",
+//                       "inline-flex",
+//                     ],
+//                   },
+//                 ],
+//               },
+//             ],
+//           },
+//           {
+//             classes: [
+//               "flex",
+//               "flex-wrap",
+//               "sm:-m-4",
+//               "-mx-4",
+//               "-mb-10",
+//               "-mt-4",
+//               "md:space-y-0",
+//               "space-y-6",
+//             ],
+//             components: [
+//               {
+//                 classes: [
+//                   "p-4",
+//                   "md:w-1/3",
+//                   "flex",
+//                   "flex-col",
+//                   "text-center",
+//                   "items-center",
+//                 ],
+//                 components: [
+//                   {
+//                     classes: [
+//                       "w-20",
+//                       "h-20",
+//                       "inline-flex",
+//                       "items-center",
+//                       "justify-center",
+//                       "rounded-full",
+// //                       "text-indigo-500",
+//                       "mb-5",
+//                       "flex-shrink-0",
+//                     ],
+//                     components: [
+//                       {
+//                         type: "image",
+//                         resizable: { ratioDefault: 1 },
+//                         classes: ["w-10", "object-center"],
+//                         attributes: {
+//                           src: "https://images.ctfassets.net/da02ousowwa0/LLNbscdDrdqUQX277UF5p/3282752c81bc15111cdd50a1c0e6bdc4/ToyotaLogoRedVer.svg",
+//                         },
+//                         field: "companyLogo",
+//                       },
+//                     ],
+//                   },
+//                   {
+//                     classes: ["flex-grow"],
+//                     components: [
+//                       {
+//                         tagName: "h2",
+//                         type: "text",
+//                         classes: [
+//                           "text-gray-900",
+//                           "text-lg",
+//                           "title-font",
+//                           "font-medium",
+//                           "mb-3",
+//                         ],
+//                         components: [
+//                           {
+//                             type: "textnode",
+//                             content: "Shooting Stars",
+//                           },
+//                         ],
+//                       },
+//                       {
+//                         tagName: "p",
+//                         type: "text",
+//                         classes: ["leading-relaxed", "text-base"],
+//                         components: [
+//                           {
+//                             type: "textnode",
+//                             content:
+//                               "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.",
+//                           },
+//                         ],
+//                       },
+//                       {
+//                         type: "link",
+//                         classes: [
+//                           "mt-3",
+//                           "text-indigo-500",
+//                           "inline-flex",
+//                           "items-center",
+//                         ],
+//                         components: [
+//                           {
+//                             type: "textnode",
+//                             content: "Learn More",
+//                           },
+//                           {
+//                             type: "svg",
+//                             resizable: { ratioDefault: true },
+//                             classes: ["w-4", "h-4", "ml-2"],
+//                             attributes: {
+//                               fill: "none",
+//                               stroke: "currentColor",
+//                               "stroke-linecap": "round",
+//                               "stroke-linejoin": "round",
+//                               "stroke-width": "2",
+//                               viewBox: "0 0 24 24",
+//                             },
+//                             components: [
+//                               {
+//                                 tagName: "path",
+//                                 type: "svg-in",
+//                                 resizable: { ratioDefault: true },
+//                                 attributes: {
+//                                   d: "M5 12h14M12 5l7 7-7 7",
+//                                 },
+//                               },
+//                             ],
+//                           },
+//                         ],
+//                       },
+//                     ],
+//                   },
+//                 ],
+//               },
+//               {
+//                 classes: [
+//                   "p-4",
+//                   "md:w-1/3",
+//                   "flex",
+//                   "flex-col",
+//                   "text-center",
+//                   "items-center",
+//                 ],
+//                 components: [
+//                   {
+//                     classes: [
+//                       "w-20",
+//                       "h-20",
+//                       "inline-flex",
+//                       "items-center",
+//                       "justify-center",
+//                       "rounded-full",
+//                       "bg-indigo-100",
+//                       "text-indigo-500",
+//                       "mb-5",
+//                       "flex-shrink-0",
+//                     ],
+//                     components: [
+//                       {
+//                         type: "image",
+//                         resizable: { ratioDefault: 1 },
+//                         classes: ["w-10", "object-center"],
+//                         attributes: {
+//                           src: "https://images.ctfassets.net/da02ousowwa0/LLNbscdDrdqUQX277UF5p/3282752c81bc15111cdd50a1c0e6bdc4/ToyotaLogoRedVer.svg",
+//                         },
+//                         field: "companyLogo",
+//                       },
+//                     ],
+//                   },
+//                   {
+//                     classes: ["flex-grow"],
+//                     components: [
+//                       {
+//                         tagName: "h2",
+//                         type: "text",
+//                         classes: [
+//                           "text-gray-900",
+//                           "text-lg",
+//                           "title-font",
+//                           "font-medium",
+//                           "mb-3",
+//                         ],
+//                         components: [
+//                           {
+//                             type: "textnode",
+//                             content: "The Catalyzer",
+//                           },
+//                         ],
+//                       },
+//                       {
+//                         tagName: "p",
+//                         type: "text",
+//                         classes: ["leading-relaxed", "text-base"],
+//                         components: [
+//                           {
+//                             type: "textnode",
+//                             content:
+//                               "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.",
+//                           },
+//                         ],
+//                       },
+//                       {
+//                         type: "link",
+//                         classes: [
+//                           "mt-3",
+//                           "text-indigo-500",
+//                           "inline-flex",
+//                           "items-center",
+//                         ],
+//                         components: [
+//                           {
+//                             type: "textnode",
+//                             content: "Learn More",
+//                           },
+//                           {
+//                             type: "svg",
+//                             resizable: { ratioDefault: true },
+//                             classes: ["w-4", "h-4", "ml-2"],
+//                             attributes: {
+//                               fill: "none",
+//                               stroke: "currentColor",
+//                               "stroke-linecap": "round",
+//                               "stroke-linejoin": "round",
+//                               "stroke-width": "2",
+//                               viewBox: "0 0 24 24",
+//                             },
+//                             components: [
+//                               {
+//                                 tagName: "path",
+//                                 type: "svg-in",
+//                                 resizable: { ratioDefault: true },
+//                                 attributes: {
+//                                   d: "M5 12h14M12 5l7 7-7 7",
+//                                 },
+//                               },
+//                             ],
+//                           },
+//                         ],
+//                       },
+//                     ],
+//                   },
+//                 ],
+//               },
+//               {
+//                 classes: [
+//                   "p-4",
+//                   "md:w-1/3",
+//                   "flex",
+//                   "flex-col",
+//                   "text-center",
+//                   "items-center",
+//                 ],
+//                 components: [
+//                   {
+//                     classes: [
+//                       "w-20",
+//                       "h-20",
+//                       "inline-flex",
+//                       "items-center",
+//                       "justify-center",
+//                       "rounded-full",
+//                       "bg-indigo-100",
+//                       "text-indigo-500",
+//                       "mb-5",
+//                       "flex-shrink-0",
+//                     ],
+//                     components: [
+//                       {
+//                         type: "image",
+//                         resizable: { ratioDefault: 1 },
+//                         classes: ["w-10", "object-center"],
+//                         attributes: {
+//                           src: "https://images.ctfassets.net/da02ousowwa0/LLNbscdDrdqUQX277UF5p/3282752c81bc15111cdd50a1c0e6bdc4/ToyotaLogoRedVer.svg",
+//                         },
+//                         field: "companyLogo",
+//                       },
+//                     ],
+//                   },
+//                   {
+//                     classes: ["flex-grow"],
+//                     components: [
+//                       {
+//                         tagName: "h2",
+//                         type: "text",
+//                         classes: [
+//                           "text-gray-900",
+//                           "text-lg",
+//                           "title-font",
+//                           "font-medium",
+//                           "mb-3",
+//                         ],
+//                         components: [{ type: "textnode", content: "Neptune" }],
+//                       },
+//                       {
+//                         tagName: "p",
+//                         type: "text",
+//                         classes: ["leading-relaxed", "text-base"],
+//                         components: [
+//                           {
+//                             type: "textnode",
+//                             content:
+//                               "Blue bottle crucifix vinyl post-ironic four dollar toast vegan taxidermy. Gastropub indxgo juice poutine, ramps microdosing banh mi pug VHS try-hard.",
+//                           },
+//                         ],
+//                       },
+//                       {
+//                         type: "link",
+//                         classes: [
+//                           "mt-3",
+//                           "text-indigo-500",
+//                           "inline-flex",
+//                           "items-center",
+//                         ],
+//                         components: [
+//                           {
+//                             type: "textnode",
+//                             content: "Learn More",
+//                           },
+//                           {
+//                             type: "svg",
+//                             resizable: { ratioDefault: true },
+//                             classes: ["w-4", "h-4", "ml-2"],
+//                             attributes: {
+//                               fill: "none",
+//                               stroke: "currentColor",
+//                               "stroke-linecap": "round",
+//                               "stroke-linejoin": "round",
+//                               "stroke-width": "2",
+//                               viewBox: "0 0 24 24",
+//                             },
+//                             components: [
+//                               {
+//                                 tagName: "path",
+//                                 type: "svg-in",
+//                                 resizable: { ratioDefault: true },
+//                                 attributes: {
+//                                   d: "M5 12h14M12 5l7 7-7 7",
+//                                 },
+//                               },
+//                             ],
+//                           },
+//                         ],
+//                       },
+//                     ],
+//                   },
+//                 ],
+//               },
+//             ],
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// ];

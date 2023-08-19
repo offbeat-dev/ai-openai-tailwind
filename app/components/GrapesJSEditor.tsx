@@ -9,19 +9,51 @@ import gjsPresetWebpage from "grapesjs-preset-webpage";
 import { myPlugin } from "../myPlugin";
 import { getSitecoreCDPString } from "../helpers";
 
-const GrapesJSEditor = ({ components }: { components: [] }) => {
+const GrapesJSEditor = ({
+  components,
+  personalizationPrompt,
+}: {
+  components: [];
+  personalizationPrompt: string;
+}) => {
   const [pluginLoaded, setPluginLoaded] = useState(false);
   const [editor, setEditor] = useState<Editor | null>(null);
   const [toolbarAdded, setToolbarAdded] = useState<any>(false);
 
   const handleFormSubmit = async (_pageName: string) => {
     const htmlArray = editor?.getHtml().split("</footer>");
-    htmlArray?.splice(1, 0, getSitecoreCDPString());
+    const jsonData = JSON.parse(JSON.stringify(editor?.getComponents()));
+    htmlArray?.splice(
+      1,
+      0,
+      "</footer>" + getSitecoreCDPString(_pageName, personalizationPrompt)
+    );
     const finalHTML =
-      '<!DOCTYPE html><html lang="en"><head><link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet"></head>' +
+      '<!DOCTYPE html><html lang="en"><head><link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet"><title>' +
+      _pageName +
+      "</title></head>" +
       htmlArray?.join("") +
-      "</html>";
+      "</html>".trim().replace('"', "'");
+    console.log(JSON.stringify(jsonData));
+    console.log(finalHTML);
 
+    try {
+      const response = await fetch(
+        "https://vodkabyte.azurewebsites.net/SaveHtml",
+        {
+          method: "POST",
+          headers: new Headers({ "content-type": "application/json" }),
+          body: JSON.stringify({
+            htmlContent: finalHTML,
+            jsonContent: JSON.stringify(jsonData),
+          }),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
     editor?.Modal.close();
   };
 
@@ -38,15 +70,6 @@ const GrapesJSEditor = ({ components }: { components: [] }) => {
         selectorManager: { escapeName },
         plugins: ["grapesjs-tailwind", gjsPresetWebpage, myPlugin],
         storageManager: false,
-      });
-      e.Panels.addButton("options", {
-        id: "update-theme",
-        className: "fa fa-adjust",
-        command: "open-update-theme",
-        attributes: {
-          title: "Update Theme",
-          "data-tooltip-pos": "bottom",
-        },
       });
       e.Panels.addButton("options", {
         id: "send-to-contentful",
@@ -103,6 +126,7 @@ const GrapesJSEditor = ({ components }: { components: [] }) => {
       e.on("component:add", (c) => {
         // console.log(JSON.parse(JSON.stringify(e.getComponents())));
       });
+
       e.render();
       setEditor(e);
     } else if (editor) {
@@ -129,7 +153,6 @@ const GrapesJSEditor = ({ components }: { components: [] }) => {
             .components()
             .forEach(
               (c: { attributes: { field: any; type: any; content: any } }) => {
-                console.log(c.attributes);
                 prevAttributes["field"] = c.attributes.field;
                 prevAttributes["type"] = c.attributes.type;
                 prevAttributes["content"] = c.attributes.content;
@@ -157,12 +180,10 @@ const GrapesJSEditor = ({ components }: { components: [] }) => {
                   }),
                 });
                 const imageResponse = await response.json();
-
                 component.setAttributes({
                   src: imageResponse.url,
                 });
               } else if (component.attributes.type === "text") {
-                console.log(component);
                 const response = await fetch("/api/text", {
                   method: "POST",
                   headers: {
@@ -218,7 +239,7 @@ const GrapesJSEditor = ({ components }: { components: [] }) => {
       />
       <script src="https://unpkg.com/grapesjs"></script>
       <script src="https://unpkg.com/grapesjs-tailwind"></script>
-      <style>{`.gjs-four-color{color:#ffb800;} .gjs-one-bg{background-color:#1c1c1c;} .gjs-logo{height:25px;} .gjs-logo-cont{display:inline-block;position-relative; top:3px;} .gjs-pn-commands .gjs-pn-buttons{display:none;}
+      <style>{`.gjs-four-color{color:#ffb800;} .gjs-one-bg{background-color:#1c1c1c;} .gjs-logo{height:25px;} .gjs-logo-cont{display:inline-block;position-relative; top:3px;} .gjs-pn-commands .gjs-pn-buttons{display:none;} .object-cover:{filter:none !important;}
       `}</style>
       <div id="example-editor"></div>
     </>

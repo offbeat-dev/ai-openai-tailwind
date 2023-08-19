@@ -7,14 +7,13 @@ import { pageComponents } from "./components/pageComponents";
 import PromptForm from "./components/PromptForm";
 import { response } from "./components/testResponse";
 import { replaceContent } from "./helpers";
+import gsap from "gsap";
 
 type pdfDataTypes = {
   companyInfo: {
     companyUrl: string;
     companyLogo: {
-      file: {
-        url: string;
-      };
+      url: string;
       title: string;
     };
     shortCompanyName: string;
@@ -29,13 +28,27 @@ type pdfDataTypes = {
       buttonText: string;
       buttonUrl: string;
     };
+    multiColumnCallout: {
+      heading: string;
+      callouts: {
+        title: string;
+        shortDescription: string;
+        callToActionLink: string;
+        callToActionText: string;
+        iconUrl: string;
+      }[];
+    };
   };
+  personalizationPrompt: string;
 };
 
 export default function IndexPage() {
-  const [data, setData] = React.useState<pdfDataTypes | null>(response as any);
+  const [data, setData] = React.useState<pdfDataTypes | null>(null); //response as any
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [grapesJSComponents, setGrapesJSComponents] = React.useState<any>([]);
+  const [personalizationPrompt, setPersonalizationPrompt] =
+    React.useState<string>("");
+  const textRef = React.useRef<HTMLDivElement>(null);
 
   const handleFormSubmit = async (formData: FormData) => {
     setIsLoading(true);
@@ -62,24 +75,53 @@ export default function IndexPage() {
   };
 
   useEffect(() => {
+    if (!isLoading) return;
+
+    let blurbs = [
+        "Building your dream landing page ...",
+        "This will land soon ...",
+        "Hang on, we are still building ...",
+        "Almost there ...",
+        "Did you brush your teeth this morning? ...",
+        "Deploying to production this Friday? ...",
+      ],
+      tl = gsap.timeline({ repeat: -1 }),
+      text = textRef.current as HTMLDivElement,
+      delay = 4;
+
+    blurbs.forEach((blurb, i) => {
+      const pos = i * delay;
+      tl.to(text, { opacity: 0, duration: 0.5 }, pos);
+      tl.add(() => {
+        text.innerText = blurb;
+      }, pos + 0.5);
+      tl.to(text, { opacity: 1, duration: 0.5 }, pos + 0.55);
+    });
+  }, [isLoading]);
+
+  useEffect(() => {
     if (!data) return;
     if (data) {
       setIsLoading(false);
     }
+    const personalizationPrompt = data.personalizationPrompt;
     const hero = data.landingPage.hero;
+    const featuredSection = data.landingPage.multiColumnCallout;
     const companyInfo = data.companyInfo;
     const newHeader = {
       components: [
-        // {
-        //   field: "companyLink",
-        //   type: "link",
-        //   content: companyInfo.companyUrl,
-        // },
+        {
+          field: "companyLink",
+          type: "link",
+          attributes: {
+            href: companyInfo.companyUrl,
+          },
+        },
         {
           field: "companyLogo",
           type: "image",
           attributes: {
-            src: `https:${companyInfo.companyLogo.file.url}`,
+            src: `https:${companyInfo.companyLogo.url}`,
             alt: companyInfo.companyLogo.title,
           },
         },
@@ -99,14 +141,51 @@ export default function IndexPage() {
           attributes: { alt: hero.imageAltText, src: hero.imageUrl },
           type: "image",
         },
-        { field: "buttonText", content: hero.buttonText, type: "textnode" },
+        {
+          field: "buttonText",
+          content: hero.buttonText,
+          type: "textnode",
+        },
         {
           field: "buttonUrl",
-          attributes: { href: hero.buttonUrl },
+          attributes: { href: `${hero.buttonUrl}` },
           type: "link",
         },
       ],
     };
+    const newFeaturedSection = {
+      components: [
+        {
+          field: "featuresTitle",
+          type: "textnode",
+          content: featuredSection.heading,
+        },
+      ],
+    };
+
+    featuredSection.callouts.forEach((callout: any, index: number) => {
+      newFeaturedSection.components.push({
+        field: `featuresImage${index + 1}`,
+        type: "image",
+        attributes: { src: `${callout.iconUrl}-variation` },
+      });
+      newFeaturedSection.components.push({
+        field: `featuresTitle${index + 1}`,
+        type: "textnode",
+        content: callout.title,
+      });
+      newFeaturedSection.components.push({
+        field: `featuresLinkText${index + 1}`,
+        type: "textnode",
+        content: callout.callToActionText,
+      });
+      newFeaturedSection.components.push({
+        field: `featuresDescription${index + 1}`,
+        type: "textnode",
+        content: callout.shortDescription,
+      });
+    });
+
     const newFooter = {
       components: [
         {
@@ -127,28 +206,32 @@ export default function IndexPage() {
         return replaceContent(component, newHeader.components);
       }
     );
+    const newFeaturedSectionComponents = pageComponents[2].components.map(
+      (component: any) => {
+        return replaceContent(component, newFeaturedSection.components);
+      }
+    );
     const newHeroComponents = pageComponents[1].components.map(
       (component: any) => {
         return replaceContent(component, newHero.components);
       }
     );
-
-    const newFooterComponents = pageComponents[2].components.map(
+    const newFooterComponents = pageComponents[3].components.map(
       (component: any) => {
         return replaceContent(component, newFooter.components);
       }
     );
 
-    pageComponents[0].components = newHeaderComponents;
-    pageComponents[1].components = newHeroComponents;
-    pageComponents[2].components = newFooterComponents;
-
     setGrapesJSComponents(pageComponents);
+    setPersonalizationPrompt(personalizationPrompt);
   }, [data]);
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen flex-col gap-6">
+        <div className="text-white text-2xl" ref={textRef}>
+          Loading
+        </div>
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
       </div>
     );
@@ -159,7 +242,10 @@ export default function IndexPage() {
           <PromptForm handleFormSubmit={handleFormSubmit} />
         )}
 
-        <GrapesJSEditor components={grapesJSComponents} />
+        <GrapesJSEditor
+          components={grapesJSComponents}
+          personalizationPrompt={personalizationPrompt}
+        />
       </>
     );
   }
