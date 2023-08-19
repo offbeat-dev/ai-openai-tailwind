@@ -28,7 +28,14 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // formData.append("prompt", e.currentTarget.prompt.value);
+    formData.append(
+      "landingPageIntention",
+      e.currentTarget.intention.value || "Exciting discount on a Toyota vehicle"
+    );
+    formData.append(
+      "companyInfo",
+      e.currentTarget.companyinfo.value || "Toyota company info"
+    );
     acceptedFiles.forEach((file: FileWithPath) => {
       formData.append("pdf", file, file.name);
     });
@@ -53,12 +60,29 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
             Generate your landing page
           </h1> */}
             <form onSubmit={handleSubmit} className="w-full block">
-              {/* <textarea
-                placeholder="Describe the product or service you are generating a landing page for..."
-                name="prompt"
-                className="w-full rounded-md text-2xl text-black p-4 font-titillium"
-                rows={5}
-              /> */}
+              <div className="my-2">
+                <label htmlFor="intention" className="text-xl font-titillium">
+                  Landing page intention
+                </label>
+                <input
+                  placeholder="Ex: Exciting discount on a Toyota vehicle"
+                  name="intention"
+                  className="w-full rounded-md text-xl text-black p-4 font-titillium my-2"
+                />
+              </div>
+              <div className="my-2">
+                <label
+                  htmlFor="companyinfo"
+                  className="text-2xl font-titillium"
+                >
+                  Company information
+                </label>
+                <input
+                  placeholder="Ex: Toyota company info"
+                  name="companyinfo"
+                  className="w-full rounded-md text-2xl text-black p-4 font-titillium my-2"
+                />
+              </div>
               <div>
                 <div
                   {...getRootProps({ className: "dropzone" })}
