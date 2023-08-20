@@ -79,9 +79,9 @@ const GrapesJSEditor = ({
         storageManager: false,
       });
       e.Panels.addButton("options", {
-        id: "send-to-contentful",
+        id: "send-to-cms",
         className: "fa fa-cloud-upload",
-        context: "send-to-contentful",
+        context: "send-to-cms",
         title: "Save to CMS",
         command(editor: Editor) {
           editor.Modal.setTitle("Send page to CMS")
@@ -103,7 +103,7 @@ const GrapesJSEditor = ({
             });
         },
         attributes: {
-          title: "Save to CMS",
+          title: "Save to Contentful",
           "data-tooltip-pos": "bottom",
         },
       });
@@ -139,7 +139,7 @@ const GrapesJSEditor = ({
     } else if (editor) {
       editor.setComponents(components);
       editor.on("modal", (props) => {
-        const modalEl = document.getElementById("send-to-contentful");
+        const modalEl = document.getElementById("send-to-cms");
         if (modalEl) {
           const form = modalEl.querySelector("form");
           if (form) {
