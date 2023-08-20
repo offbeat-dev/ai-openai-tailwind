@@ -15,7 +15,6 @@ type PromptFormProps = {
 const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
     useDropzone({
-      minSize: 1,
       maxFiles: 1,
       accept: {
         "application/pdf": [],
