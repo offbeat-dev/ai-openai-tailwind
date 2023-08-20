@@ -52,11 +52,15 @@ export default function IndexPage() {
   const [productOrService, setProductOrService] = React.useState<string>("");
   const textRef = React.useRef<HTMLDivElement>(null);
 
-  const handleFormSubmit = async (formData: FormData) => {
+  const handleFormSubmit = async (
+    formData: FormData,
+    landingPageIntention: string,
+    companyInfo: string
+  ) => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        "https://vodkabyte.azurewebsites.net/ParsePdf",
+        `https://vodkabyte.azurewebsites.net/ParsePdf?landingPageIntention=${landingPageIntention}&companyInfo=${companyInfo}`,
         {
           method: "POST",
           headers: {
@@ -125,8 +129,8 @@ export default function IndexPage() {
           field: "companyLogo",
           type: "image",
           attributes: {
-            src: `https:${companyInfo.companyLogo.url}`,
-            alt: companyInfo.companyLogo.title,
+            src: `https:${companyInfo?.companyLogo?.url}`,
+            alt: companyInfo?.companyLogo?.title,
           },
         },
         ,

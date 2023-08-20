@@ -5,12 +5,17 @@ import Image from "next/image";
 import { FileWithPath, useDropzone } from "react-dropzone";
 
 type PromptFormProps = {
-  handleFormSubmit: (formData: FormData) => void;
+  handleFormSubmit: (
+    formData: FormData,
+    landingPageIntention: string,
+    companyInfo: string
+  ) => void;
 };
 
 const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
   const { acceptedFiles, fileRejections, getRootProps, getInputProps } =
     useDropzone({
+      minSize: 1,
       maxFiles: 1,
       accept: {
         "application/pdf": [],
@@ -28,20 +33,26 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    formData.append(
-      "landingPageIntention",
-      e.currentTarget.intention.value || "Exciting discount on a Toyota vehicle"
-    );
-    formData.append(
-      "companyInfo",
-      e.currentTarget.companyinfo.value || "Toyota company info"
-    );
+
+    // formData.append(
+    //   "landingPageIntention",
+    //   e.currentTarget.intention.value || "Exciting discount on a Toyota vehicle"
+    // );
+    // formData.append(
+    //   "companyInfo",
+    //   e.currentTarget.companyinfo.value || "Toyota company info"
+    // );
+
     acceptedFiles.forEach((file: FileWithPath) => {
       formData.append("pdf", file, file.name);
     });
-    handleFormSubmit(formData);
 
-    console.log(Object.fromEntries(formData.entries()));
+    handleFormSubmit(
+      formData,
+      e.currentTarget.intention.value ||
+        "Exciting discount on a Toyota vehicle",
+      e.currentTarget.companyinfo.value || "Toyota company info"
+    );
   };
 
   return (
@@ -68,6 +79,7 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
                   Landing page intention
                 </label>
                 <input
+                  required={true}
                   placeholder="Ex: Exciting discount on a Toyota vehicle"
                   name="intention"
                   className="w-full rounded-md text-xl text-black p-4 font-titillium my-2"
@@ -81,6 +93,7 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
                   Company information
                 </label>
                 <input
+                  required={true}
                   placeholder="Ex: Toyota company info"
                   name="companyinfo"
                   className="w-full rounded-md text-2xl text-black p-4 font-titillium my-2"
