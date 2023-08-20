@@ -104,6 +104,7 @@ export default function IndexPage() {
     if (data) {
       setIsLoading(false);
     }
+    console.log(data);
     const personalizationPrompt = data.personalizationPrompt;
     const hero = data.landingPage.hero;
     const featuredSection = data.landingPage.multiColumnCallout;
