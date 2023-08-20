@@ -11,6 +11,7 @@ import gsap from "gsap";
 
 type pdfDataTypes = {
   companyInfo: {
+    productOrService: string;
     companyUrl: string;
     companyLogo: {
       url: string;
@@ -48,6 +49,7 @@ export default function IndexPage() {
   const [grapesJSComponents, setGrapesJSComponents] = React.useState<any>([]);
   const [personalizationPrompt, setPersonalizationPrompt] =
     React.useState<string>("");
+  const [productOrService, setProductOrService] = React.useState<string>("");
   const textRef = React.useRef<HTMLDivElement>(null);
 
   const handleFormSubmit = async (formData: FormData) => {
@@ -106,6 +108,7 @@ export default function IndexPage() {
     }
     console.log(data);
     const personalizationPrompt = data.personalizationPrompt;
+    const productOrService = data.companyInfo.productOrService;
     const hero = data.landingPage.hero;
     const featuredSection = data.landingPage.multiColumnCallout;
     const companyInfo = data.companyInfo;
@@ -225,6 +228,7 @@ export default function IndexPage() {
 
     setGrapesJSComponents(pageComponents);
     setPersonalizationPrompt(personalizationPrompt);
+    setProductOrService(productOrService);
   }, [data]);
 
   if (isLoading) {
@@ -246,6 +250,7 @@ export default function IndexPage() {
         <GrapesJSEditor
           components={grapesJSComponents}
           personalizationPrompt={personalizationPrompt}
+          productOrService={productOrService}
         />
       </>
     );

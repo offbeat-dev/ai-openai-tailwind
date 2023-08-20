@@ -61,7 +61,10 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
           </h1> */}
             <form onSubmit={handleSubmit} className="w-full block">
               <div className="my-2">
-                <label htmlFor="intention" className="text-xl font-titillium">
+                <label
+                  htmlFor="intention"
+                  className="text-xl text-white font-titillium"
+                >
                   Landing page intention
                 </label>
                 <input
@@ -73,7 +76,7 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
               <div className="my-2">
                 <label
                   htmlFor="companyinfo"
-                  className="text-2xl font-titillium"
+                  className="text-2xl text-white font-titillium"
                 >
                   Company information
                 </label>
@@ -98,7 +101,7 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
                 </div>
               </div>
               <button
-                className="bg-yellow border-2 border-transparent text-black p-4 font-semibold hover:text-white hover:bg-black hover:border-2 hover:border-white text-md mx-auto block font-mono transition-all duration-300 ease-in-out rounded-md"
+                className="bg-yellow border-2 border-transparent text-white p-4 font-semibold hover:text-white hover:bg-black hover:border-2 hover:border-white text-md mx-auto block font-mono transition-all duration-300 ease-in-out rounded-md"
                 type="submit"
               >
                 Generate Landing Page

@@ -31,7 +31,8 @@ const replaceContent = (obj: any, components: any) => {
 
 const getSitecoreCDPString = (
   _pageName: string,
-  _personalizationPrompt: string
+  _personalizationPrompt: string,
+  _productOrService: string
 ) => {
   const s = `<script>
   let engage = undefined;
@@ -67,14 +68,14 @@ const getSitecoreCDPString = (
       page: "${_pageName}"
    };
     const extensionData = {
-      CTAText: document.getElementById("heroCTA")?.innerText,
+      CTAText:"${_productOrService}",
       PersonalizationPrompt: "${_personalizationPrompt}"
     };
     await engage.event("vodkabyte:CLICKED_HERO_CTA", eventData, extensionData);
     const handleClick = async () => {
       const eventData = { channel: "WEB", currency: "USD", pointOfSale: "vodkabyte", language: "EN", page: "${_pageName}"}; 
       const extensionData = {
-        CTAText: document.getElementById("heroCTA")?.innerText,
+        CTAText:"${_productOrService}",
         PersonalizationPrompt: "${_personalizationPrompt}"
       };
       await engage.event("vodkabyte:CLICKED_HERO_CTA", eventData, extensionData);
