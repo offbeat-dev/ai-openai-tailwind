@@ -82,28 +82,28 @@ const GrapesJSEditor = ({
         id: "send-to-contentful",
         className: "fa fa-cloud-upload",
         context: "send-to-contentful",
-        title: "Save to Contentful",
+        title: "Save to CMS",
         command(editor: Editor) {
-          editor.Modal.setTitle("Send page to Contentful")
+          editor.Modal.setTitle("Send page to CMS")
             .setContent(
               `<form class="p-12 gap-2">
               <div class="ml-auto mr-0">
                 <label class="pb-4 font-semibold" for="spaceId">Page Name:</label><br>
                 <div class="flex justify-start gap-2">
                 <input class="text-black px-4" type="text" id="pageName" name="pageName" value="" required>
-                <button class="btn btn-primary bg-yellow p-2 text-black font-sans font-semibold" type="submit">Send to Contentful</button>
+                <button class="btn btn-primary bg-yellow p-2 text-black font-sans font-semibold" type="submit">Send to CMS</button>
                 </div>
               </div>
               </form>`
             )
             .open({
               attributes: {
-                id: "send-to-contentful",
+                id: "send-to-cms",
               },
             });
         },
         attributes: {
-          title: "Save to Contentful",
+          title: "Save to CMS",
           "data-tooltip-pos": "bottom",
         },
       });
