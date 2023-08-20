@@ -78,7 +78,6 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
                   Landing page intention
                 </label>
                 <input
-                  required={true}
                   placeholder="Ex: Exciting discount on a Toyota vehicle"
                   name="intention"
                   className="w-full rounded-md text-xl text-black p-4 font-titillium my-2"
@@ -92,7 +91,6 @@ const PromptForm = ({ handleFormSubmit }: PromptFormProps) => {
                   Company information
                 </label>
                 <input
-                  required={true}
                   placeholder="Ex: Toyota company info"
                   name="companyinfo"
                   className="w-full rounded-md text-2xl text-black p-4 font-titillium my-2"
