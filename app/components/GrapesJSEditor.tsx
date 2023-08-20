@@ -34,27 +34,31 @@ const GrapesJSEditor = ({
       "</title></head>" +
       htmlArray?.join("") +
       "</html>".trim().replace('"', "'");
-    console.log(JSON.stringify(jsonData));
-    console.log(finalHTML);
 
-    try {
-      const response = await fetch(
-        "https://vodkabyte.azurewebsites.net/SaveHtml",
-        {
-          method: "POST",
-          headers: new Headers({ "content-type": "application/json" }),
-          body: JSON.stringify({
-            htmlContent: finalHTML,
-            jsonContent: JSON.stringify(jsonData),
-          }),
-        }
+    const response = await fetch(
+      "https://vodkabyte.azurewebsites.net/SaveHtml",
+      {
+        method: "POST",
+        headers: new Headers({
+          accept: "*/*",
+          "content-type": "application/json",
+        }),
+        body: JSON.stringify({
+          htmlContent: finalHTML,
+          jsonContent: JSON.stringify(jsonData),
+        }),
+      }
+    );
+    if (response.status === 200) {
+      console.log("respoonse", response.status);
+      const data = await response.text();
+      console.log("data", data);
+      editor?.Modal.setContent(
+        `<p>Your published page is now available at:</br> <a class="underline text-yellow my-2" href="${data}">${data}</a> </p>`
       );
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
+    } else {
+      editor?.Modal.setContent(`<p>there was an error with your request</p>`);
     }
-    editor?.Modal.close();
   };
 
   useEffect(() => {
