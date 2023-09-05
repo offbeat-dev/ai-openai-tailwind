@@ -13,10 +13,12 @@ const GrapesJSEditor = ({
   components,
   personalizationPrompt,
   productOrService,
+  brand,
 }: {
   components: [];
   personalizationPrompt: string;
   productOrService: string;
+  brand: string;
 }) => {
   const [pluginLoaded, setPluginLoaded] = useState(false);
   const [editor, setEditor] = useState<Editor | null>(null);
@@ -29,7 +31,12 @@ const GrapesJSEditor = ({
       1,
       0,
       "</footer>" +
-        getSitecoreCDPString(_pageName, personalizationPrompt, productOrService)
+        getSitecoreCDPString(
+          _pageName,
+          personalizationPrompt,
+          productOrService,
+          brand
+        )
     );
     const finalHTML =
       '<!DOCTYPE html><html lang="en"><head><link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet"><title>' +

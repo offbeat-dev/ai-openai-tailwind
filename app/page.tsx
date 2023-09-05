@@ -10,6 +10,7 @@ import { replaceContent } from "./helpers";
 import gsap from "gsap";
 
 type pdfDataTypes = {
+  extractedBrands: string[];
   companyInfo: {
     productOrService: string;
     companyUrl: string;
@@ -44,11 +45,12 @@ type pdfDataTypes = {
 };
 
 export default function IndexPage() {
-  const [data, setData] = React.useState<pdfDataTypes | null>(null); //response as any
+  const [data, setData] = React.useState<pdfDataTypes | null>(response as any); //response as any
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [grapesJSComponents, setGrapesJSComponents] = React.useState<any>([]);
   const [personalizationPrompt, setPersonalizationPrompt] =
     React.useState<string>("");
+  const [brand, setBrand] = React.useState<string>("");
   const [productOrService, setProductOrService] = React.useState<string>("");
   const textRef = React.useRef<HTMLDivElement>(null);
 
@@ -230,6 +232,7 @@ export default function IndexPage() {
       }
     );
 
+    if (data.extractedBrands.length > 0) setBrand(data.extractedBrands[0]);
     setGrapesJSComponents(pageComponents);
     setPersonalizationPrompt(personalizationPrompt);
     setProductOrService(productOrService);
@@ -255,6 +258,7 @@ export default function IndexPage() {
           components={grapesJSComponents}
           personalizationPrompt={personalizationPrompt}
           productOrService={productOrService}
+          brand={brand}
         />
       </>
     );

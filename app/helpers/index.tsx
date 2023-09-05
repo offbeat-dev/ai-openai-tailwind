@@ -32,7 +32,8 @@ const replaceContent = (obj: any, components: any) => {
 const getSitecoreCDPString = (
   _pageName: string,
   _personalizationPrompt: string,
-  _productOrService: string
+  _productOrService: string,
+  _brand: string
 ) => {
   const s = `<script>
   let engage = undefined;
@@ -68,6 +69,7 @@ const getSitecoreCDPString = (
       page: "${_pageName}"
    };
     const extensionData = {
+      vbBrand:"${_brand}",
       CTAText:"${_productOrService}",
       PersonalizationPrompt: "${_personalizationPrompt}"
     };
@@ -75,6 +77,7 @@ const getSitecoreCDPString = (
     const handleClick = async () => {
       const eventData = { channel: "WEB", currency: "USD", pointOfSale: "vodkabyte", language: "EN", page: "${_pageName}"}; 
       const extensionData = {
+        vbBrand:"${_brand}",
         CTAText:"${_productOrService}",
         PersonalizationPrompt: "${_personalizationPrompt}"
       };
