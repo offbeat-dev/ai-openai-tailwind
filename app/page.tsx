@@ -45,7 +45,7 @@ type pdfDataTypes = {
 };
 
 export default function IndexPage() {
-  const [data, setData] = React.useState<pdfDataTypes | null>(response as any); //response as any
+  const [data, setData] = React.useState<pdfDataTypes | null>(); //response as any
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [grapesJSComponents, setGrapesJSComponents] = React.useState<any>([]);
   const [personalizationPrompt, setPersonalizationPrompt] =
